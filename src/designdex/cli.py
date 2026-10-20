@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
     running anything.
     """
     parser = argparse.ArgumentParser(
-        prog="uiux-pro-max",
+        prog="designdex",
         description="Search a curated UI/UX design knowledge base.",
     )
     parser.add_argument("query", help="Search query")
@@ -96,10 +96,10 @@ def format_output(result: dict) -> str:
 
     output = []
     if result.get("stack"):
-        output.append("## UI Pro Max Stack Guidelines")
+        output.append("## designdex / stack guideline")
         output.append(f"**Stack:** {result['stack']} | **Query:** {result['query']}")
     else:
-        output.append("## UI Pro Max Search Results")
+        output.append("## designdex / result")
         output.append(f"**Domain:** {result['domain']} | **Query:** {result['query']}")
     output.append(
         f"**Source:** {result['file']} | **Found:** {result['count']} results\n"

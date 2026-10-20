@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-UI/UX Pro Max Core - BM25 search engine for UI/UX style guides
+designdex core - BM25 search over the design tables
 """
 
 import csv
@@ -12,7 +12,7 @@ from math import log
 # ============ CONFIGURATION ============
 # ``files`` resolves the corpus both from an installed wheel and from a source
 # checkout, so nothing else in the package needs to know where it lives.
-DATA_DIR = files("uiux_pro_max") / "data"
+DATA_DIR = files("designdex") / "data"
 MAX_RESULTS = 3
 
 CSV_CONFIG = {

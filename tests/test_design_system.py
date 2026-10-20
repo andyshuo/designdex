@@ -1,6 +1,6 @@
 """Tests for the design system generator and its two renderers."""
 
-from uiux_pro_max.design_system import (
+from designdex.design_system import (
     DesignSystemGenerator,
     format_ascii_box,
     format_markdown,

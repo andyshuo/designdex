@@ -1,6 +1,6 @@
 """Tests for the domain and stack search entry points."""
 
-from uiux_pro_max.core import CSV_CONFIG, MAX_RESULTS, search, search_stack
+from designdex.core import CSV_CONFIG, MAX_RESULTS, search, search_stack
 
 
 def test_search_returns_rows_with_the_configured_columns():

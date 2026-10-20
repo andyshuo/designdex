@@ -1,15 +1,16 @@
-# ui-ux-pro-max
+# designdex
 
-A design knowledge base that answers questions on your machine, offline.
+**Design decisions you can grep.**
 
-Ask it which chart fits time-series data, which font pairing suits a data dashboard, or how to memoize an expensive React render. It returns the specific rows — as Markdown for a human, or JSON for a program.
+An offline index of UI/UX design decisions — 24 curated tables, 1,429 rows, ranked with BM25. Ask which chart fits time-series data, which font pairs with a data dashboard, or how to memoize an expensive React render, and it returns the row that answers it, as Markdown or JSON.
 
-No API key, no network call, no service to keep alive, and no dependencies — 24 CSV files, one Python package, the standard library.
+[![ci](https://github.com/andyshuo/designdex/actions/workflows/ci.yml/badge.svg)](https://github.com/andyshuo/designdex/actions/workflows/ci.yml)
 
-```
-$ uiux-pro-max "glassmorphism" --max-results 1
+```console
+$ pip install .
+$ designdex "glassmorphism"
 
-## UI Pro Max Search Results
+## designdex / result
 **Domain:** style | **Query:** glassmorphism
 **Source:** styles.csv | **Found:** 1 results
 
@@ -23,75 +24,70 @@ $ uiux-pro-max "glassmorphism" --max-results 1
 - **CSS/Technical Keywords:** backdrop-filter: blur(15px), background: rgba(255, 255, 255, 0.15)
 ```
 
-## Why this exists
+Python 3.9 or newer. No dependencies, no network, no API key, no service to keep alive.
 
-Design guidance lives in blog posts that go stale and design tools that want a subscription. Ask a language model "what colours suit a fintech dashboard" and it invents an answer that reads just as confidently as a correct one.
+## The problem
 
-This is the opposite arrangement: a fixed, reviewable table of decisions, plus a ranker that finds the right row. If a palette is wrong you can open `colors.csv` and change it. You cannot edit a hallucination.
+Design guidance lives in blog posts that go stale and design tools that want a subscription. Ask a language model what colours suit a fintech dashboard and it invents an answer that reads exactly as confidently as a correct one.
 
-It is also a cheap retrieval step in front of an LLM. Hand the model two rows instead of forty pages of prompt.
+This is the other arrangement: a fixed, reviewable table of decisions, plus a ranker that finds the right row. If a palette is wrong you open `colors.csv` and change it. You cannot edit a hallucination.
 
-## Install
+It also works as a cheap retrieval step in front of an LLM — hand the model two rows instead of forty pages of prompt.
 
-```bash
-pip install .          # or: pipx install .
-uiux-pro-max --help
-```
-
-Python 3.9 or newer. There are no dependencies — the standard library only.
-
-## What it does
+## Usage
 
 ### Search a domain
 
-```bash
-uiux-pro-max "accessible focus states for a form"
-```
+```console
+$ designdex "accessible focus states for a form" --max-results 1
 
-The domain is guessed from the query when you do not pass one:
-
-```
+## designdex / result
 **Domain:** web | **Query:** accessible focus states for a form
 **Source:** web-interface.csv | **Found:** 1 results
 
 ### Result 1
 - **Category:** Focus
 - **Issue:** Visible Focus States
+- **Platform:** Web
+- **Description:** All interactive elements need visible focus states
 - **Do:** Use :focus-visible with ring/outline
 - **Don't:** No focus indication
+- **Code Example Good:** focus-visible:ring-2 focus-visible:ring-blue-500
+- **Code Example Bad:** outline-none // no replacement
 - **Severity:** Critical
 ```
 
-Pass `--domain` when the guess is wrong, `--json` when a program is reading, and `--max-results` to widen the net.
+The domain is inferred from the query when you do not pass `--domain`. Pass `--json` when a program is reading, `--max-results` to widen the net, `-d` to override a bad guess.
 
 ### Search a framework
 
-```bash
-uiux-pro-max "memoization" --stack react
-```
+```console
+$ designdex "useMemo" --stack react
 
-```
+## designdex / stack guideline
 **Stack:** react | **Query:** useMemo
 **Source:** stacks/react.csv | **Found:** 1 results
 
 ### Result 1
 - **Category:** Rendering
 - **Guideline:** Memoize expensive calculations
+- **Description:** Use useMemo for costly computations
 - **Code Good:** useMemo(() => expensive(), [deps])
 - **Code Bad:** const result = expensiveCalc()
+- **Severity:** Medium
 - **Docs URL:** https://react.dev/reference/react/useMemo
 ```
 
 ### Assemble a whole design system
 
-```bash
-uiux-pro-max "SaaS analytics dashboard for a fintech" \
-  --design-system --project-name "Fintech Console"
+```console
+$ designdex "SaaS analytics dashboard for a fintech" \
+    --design-system --project-name "Fintech Console"
 ```
 
-This composes several tables into one block — a landing-page pattern with its section order, a visual style with its effects, a palette with hex values, a font pairing with the Google Fonts import URL, the anti-patterns to avoid, and a pre-delivery checklist:
+This composes several tables into one block — a landing-page pattern with its section order, a visual style with its effects, a palette, a font pairing with the Google Fonts import URL, the anti-patterns to avoid, and a pre-delivery checklist:
 
-```
+```text
 |  TARGET: Fintech Console - RECOMMENDED DESIGN SYSTEM
 |  PATTERN: AI Personalization Landing
 |     CTA: Context-aware placement based on user segment
@@ -106,35 +102,45 @@ This composes several tables into one block — a landing-page pattern with its 
 |     Google Fonts: https://fonts.google.com/share?selection.family=Fira+Code:wght@400...
 ```
 
-Add `--persist` to write the result to disk as a master document plus per-page overrides:
+Add `--persist` to write it out as a master document plus per-page overrides:
 
-```bash
-uiux-pro-max "SaaS analytics dashboard" --design-system --persist \
-  --project-name "Fintech Console" --page "settings"
+```console
+$ designdex "fintech dashboard" --design-system --persist \
+    -p "Fintech Console" --page settings
+
+Design system persisted to /path/to/project/design-system/fintech-console/
+  /path/to/project/design-system/fintech-console/MASTER.md
+  /path/to/project/design-system/fintech-console/pages/settings.md
 ```
 
 ## What is in the box
 
-Ten domains, 1429 curated rows.
+Ten domains, 1,429 curated rows.
 
 | Domain | Rows | Answers questions about |
 | --- | ---: | --- |
 | `style` | 67 | visual styles — glassmorphism, brutalism, data-dense dashboards |
-| `color` | 96 | palettes by product category, with hex notes |
+| `color` | 96 | palettes by product category, with hex values |
 | `typography` | 57 | font pairings, mood, and the CSS import |
 | `chart` | 25 | which chart type fits which data |
 | `landing` | 27 | landing-page patterns, section order, conversion notes |
 | `product` | 96 | UI conventions by product category |
+| `web` | 30 | interface do/don't, with code |
 | `ux` | 99 | UX rules with severity |
-| `web` | 30 | interface do/don't with code |
 | `react` | 44 | React performance rules |
 | `icons` | 100 | icon recommendations |
 
-Plus 13 framework guides under `--stack`: `html-tailwind`, `react` (53), `nextjs` (52), `astro` (53), `vue` (49), `nuxtjs` (58), `nuxt-ui` (50), `svelte` (53), `swiftui` (50), `react-native` (51), `flutter` (52), `shadcn` (60), `jetpack-compose` (52).
+Plus 13 framework guides under `--stack`: `html-tailwind` (55), `react` (53), `nextjs` (52), `astro` (53), `vue` (49), `nuxtjs` (58), `nuxt-ui` (50), `svelte` (53), `swiftui` (50), `react-native` (51), `flutter` (52), `shadcn` (60), `jetpack-compose` (52).
 
-## How the ranking works
+## Why BM25 and not embeddings
 
-BM25, implemented in `src/uiux_pro_max/core.py` — the same family of scoring that Elasticsearch and Lucene use, in about a hundred and twenty lines.
+The corpus is 1,429 rows written in a controlled vocabulary. That is small enough that a lexical ranker does the job, and lexical ranking has three properties a vector index does not:
+
+- **No model, no download, no GPU.** The whole thing is the standard library, so it installs in a second and works on a plane.
+- **Deterministic.** The same query returns the same ranking forever. You can put it in a test.
+- **Explainable.** When a row wins, it won because specific query terms appear in specific columns. That reasoning is inspectable; a cosine similarity is not.
+
+BM25, in about 120 lines:
 
 ```python
 idf[word] = log((N - freq + 0.5) / (freq + 0.5) + 1)
@@ -143,45 +149,55 @@ score += idf[t] * (tf * (k1 + 1)) / (tf + k1 * (1 - b + b * doc_len / avgdl))
 
 `k1 = 1.5` and `b = 0.75` are the textbook defaults. They were not tuned against a labelled set, because there isn't one.
 
-Each table declares which columns are searchable and which are returned, so a row is scored on the text a person would actually search — `Keywords`, `Best For`, `Description` — and never on hex values or CSS snippets that would drown the ranking in noise.
+Each table declares which columns are searchable and which are returned, so a row is scored on the text a person would actually type — `Keywords`, `Best For`, `Description` — and never on hex values or CSS snippets that would drown the ranking in noise.
 
-## Use it as a library
+## As a library
 
 ```python
-from uiux_pro_max import search, search_stack, detect_domain, generate_design_system
+from designdex import search, search_stack, detect_domain, generate_design_system
 
-rows = search("dark dashboard", domain="style", max_results=3)
-rows = search_stack("flatlist", stack="react-native", max_results=3)
+search("dark dashboard", domain="style", max_results=3)
+search_stack("flatlist", stack="react-native", max_results=3)
 detect_domain("which chart for time series")  # -> "chart"
-design = generate_design_system("fintech dashboard", project_name="Console")
+generate_design_system("fintech dashboard", project_name="Console")
 ```
 
-Every function returns plain dicts and lists. There is no state to manage and no client to configure.
+Everything returns plain dicts and lists. No client to configure, no state to manage.
 
 ## Where the data comes from
 
-The rows are hand-curated, and every external reference in them points at first-party documentation: `react.dev`, `tailwindcss.com`, `ui.shadcn.com`, `fonts.google.com`, `developer.apple.com/documentation/swiftui`, `api.flutter.dev`. The code snippets are one-liners showing API usage, not excerpts from other people's programs.
+The rows are hand-curated, and every external reference points at first-party documentation: `react.dev`, `tailwindcss.com`, `ui.shadcn.com`, `fonts.google.com`, `developer.apple.com/documentation/swiftui`, `api.flutter.dev`. The code snippets are one-liners showing API usage, not excerpts from other people's programs.
 
 ## What this is not
 
-Stated plainly, because the honest boundary is more useful than a feature list.
+The boundary is more useful than a feature list, so here it is plainly.
 
-- **It is not a model.** There are no embeddings. It matches words, not meaning. A query using none of a table's vocabulary scores every row at zero and comes back empty — which is the correct answer, not a bug.
-- **The tokenizer drops words of two characters or fewer**, so `UI`, `UX` and `px` never match. This is deliberate: those tokens appear in almost every row, so they rank nothing.
+- **It is not a model.** There are no embeddings. It matches words, not meaning. A query using none of a table's vocabulary scores every row at zero and comes back empty — that is the correct answer, not a bug.
+- **The tokenizer drops words of two characters or fewer**, so `UI`, `UX` and `px` never match. Deliberate: those appear in nearly every row, so they rank nothing.
 - **The data is one set of opinions.** It reflects a coherent convention, not a survey of designers. Treat a row as a strong default to argue with, not a citation.
 - **`--design-system` composes rows; it does not evaluate a design.** It has never seen your page.
-- **The ranking is only as good as the vocabulary you use.** "Make it feel expensive" retrieves nothing. "glassmorphism" retrieves the row.
+- **The ranking is only as good as your vocabulary.** "Make it feel expensive" retrieves nothing. "glassmorphism" retrieves the row.
 
 ## Development
 
-```bash
-python -m pip install -e ".[dev]"
-python -m pytest --cov=uiux_pro_max --cov-report=term-missing
-ruff check .
-ruff format --check .
+```console
+$ pip install -e ".[dev]"
+$ pytest --cov=designdex --cov-report=term-missing
+$ ruff check .
+$ ruff format --check .
 ```
 
-100 tests, 92% statement coverage. Each of the five bugs found during that work is pinned by a test that fails if the fix is reverted — the BM25 index not resetting between `fit` calls (which drove IDF negative and inverted the ranking), keyword matching on substrings so that "guide" matched "ui", a silent fallback for unknown domains, a negative `--max-results` returning all-but-the-last row, and a stray `from core import search` that broke `--page` outside the original directory.
+100 tests, 92% statement coverage, CI across Python 3.9–3.13.
+
+Each of the five bugs fixed before the first release is pinned by a test that fails if the fix is reverted:
+
+| Bug | Consequence |
+| --- | --- |
+| `BM25.fit` counted into its existing document frequencies | A second `fit` on one instance doubled every count and drove IDF negative, inverting the ranking |
+| `detect_domain` matched keywords as bare substrings | "guide" matched "ui" and "sidebar" matched "bar", so queries were answered from the wrong table |
+| An unknown domain silently fell back to `style` | Answered a question nobody asked, with a 200 OK |
+| A negative `--max-results` sliced from the end | Returned every row except the last one |
+| A function-local `from core import search` | `--page` was broken in every directory except `scripts/`, where the name happened to resolve |
 
 ## License
 

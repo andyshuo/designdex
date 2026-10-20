@@ -1,6 +1,6 @@
 """Tests for the BM25 ranking core."""
 
-from uiux_pro_max.core import BM25
+from designdex.core import BM25
 
 
 def test_tokenize_lowercases_and_splits_on_punctuation():

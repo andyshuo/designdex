@@ -9,7 +9,7 @@ import csv
 
 import pytest
 
-from uiux_pro_max.core import _STACK_COLS, CSV_CONFIG, DATA_DIR, STACK_CONFIG
+from designdex.core import _STACK_COLS, CSV_CONFIG, DATA_DIR, STACK_CONFIG
 
 
 def _header(path):

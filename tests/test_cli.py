@@ -4,21 +4,21 @@ import json
 
 import pytest
 
-from uiux_pro_max.cli import build_parser, format_output, main
-from uiux_pro_max.core import search
+from designdex.cli import build_parser, format_output, main
+from designdex.core import search
 
 
 def test_format_output_lists_each_result():
     text = format_output(search("dashboard", "product", 1))
 
-    assert "## UI Pro Max Search Results" in text
+    assert "## designdex / result" in text
     assert "### Result 1" in text
 
 
 def test_format_output_labels_a_stack_search():
     text = format_output(search("useState", max_results=1) | {"stack": "react"})
 
-    assert "## UI Pro Max Stack Guidelines" in text
+    assert "## designdex / stack guideline" in text
     assert "**Stack:** react" in text
 
 

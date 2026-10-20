@@ -1,8 +1,8 @@
 ---
-name: ui-ux-pro-max
+name: designdex
 description: UI/UX design intelligence with searchable database
 ---
-# ui-ux-pro-max
+# designdex
 
 Comprehensive design guide for web and mobile applications. Contains 67 styles, 96 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 13 technology stacks. Searchable database with priority-based recommendations.
 
@@ -50,7 +50,7 @@ Extract key information from user request:
 **Always start with `--design-system`** to get comprehensive recommendations with reasoning:
 
 ```bash
-uiux-pro-max "<product_type> <industry> <keywords>" --design-system [-p "Project Name"]
+designdex "<product_type> <industry> <keywords>" --design-system [-p "Project Name"]
 ```
 
 This command:
@@ -61,7 +61,7 @@ This command:
 
 **Example:**
 ```bash
-uiux-pro-max "beauty spa wellness service" --design-system -p "Serenity Spa"
+designdex "beauty spa wellness service" --design-system -p "Serenity Spa"
 ```
 
 ### Step 2b: Persist Design System (Master + Overrides Pattern)
@@ -69,7 +69,7 @@ uiux-pro-max "beauty spa wellness service" --design-system -p "Serenity Spa"
 To save the design system for hierarchical retrieval across sessions, add `--persist`:
 
 ```bash
-uiux-pro-max "<query>" --design-system --persist -p "Project Name"
+designdex "<query>" --design-system --persist -p "Project Name"
 ```
 
 This creates:
@@ -78,7 +78,7 @@ This creates:
 
 **With page-specific override:**
 ```bash
-uiux-pro-max "<query>" --design-system --persist -p "Project Name" --page "dashboard"
+designdex "<query>" --design-system --persist -p "Project Name" --page "dashboard"
 ```
 
 This also creates:
@@ -94,7 +94,7 @@ This also creates:
 After getting the design system, use domain searches to get additional details:
 
 ```bash
-uiux-pro-max "<keyword>" --domain <domain> [-n <max_results>]
+designdex "<keyword>" --domain <domain> [-n <max_results>]
 ```
 
 **When to use detailed searches:**
@@ -112,7 +112,7 @@ uiux-pro-max "<keyword>" --domain <domain> [-n <max_results>]
 Get implementation-specific best practices. If user doesn't specify a stack, **default to `html-tailwind`**.
 
 ```bash
-uiux-pro-max "<keyword>" --stack html-tailwind
+designdex "<keyword>" --stack html-tailwind
 ```
 
 Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`, `jetpack-compose`
@@ -166,7 +166,7 @@ Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`
 ### Step 2: Generate Design System (REQUIRED)
 
 ```bash
-uiux-pro-max "beauty spa wellness service elegant" --design-system -p "Serenity Spa"
+designdex "beauty spa wellness service elegant" --design-system -p "Serenity Spa"
 ```
 
 **Output:** Complete design system with pattern, style, colors, typography, effects, and anti-patterns.
@@ -175,16 +175,16 @@ uiux-pro-max "beauty spa wellness service elegant" --design-system -p "Serenity 
 
 ```bash
 # Get UX guidelines for animation and accessibility
-uiux-pro-max "animation accessibility" --domain ux
+designdex "animation accessibility" --domain ux
 
 # Get alternative typography options if needed
-uiux-pro-max "elegant luxury serif" --domain typography
+designdex "elegant luxury serif" --domain typography
 ```
 
 ### Step 4: Stack Guidelines
 
 ```bash
-uiux-pro-max "layout responsive form" --stack html-tailwind
+designdex "layout responsive form" --stack html-tailwind
 ```
 
 **Then:** Synthesize design system + detailed searches and implement the design.
@@ -197,10 +197,10 @@ The `--design-system` flag supports two output formats:
 
 ```bash
 # ASCII box (default) - best for terminal display
-uiux-pro-max "fintech crypto" --design-system
+designdex "fintech crypto" --design-system
 
 # Markdown - best for documentation
-uiux-pro-max "fintech crypto" --design-system -f markdown
+designdex "fintech crypto" --design-system -f markdown
 ```
 
 ---

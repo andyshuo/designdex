@@ -7,7 +7,7 @@ with a text editor and there is nothing to keep in sync with a database.
 
 Typical use::
 
-    from uiux_pro_max import search, generate_design_system
+    from designdex import search, generate_design_system
 
     search("dark analytics dashboard")
     print(generate_design_system("fintech mobile app", "Ledger"))

@@ -2,7 +2,7 @@
 
 import pytest
 
-from uiux_pro_max.core import detect_domain
+from designdex.core import detect_domain
 
 
 @pytest.mark.parametrize(

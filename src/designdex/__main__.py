@@ -1,4 +1,4 @@
-"""Entry point for ``python -m uiux_pro_max``."""
+"""Entry point for ``python -m designdex``."""
 
 import sys
 
