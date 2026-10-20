@@ -1,0 +1,33 @@
+Applies to: src/designdex/data/ (24 CSV tables) and SKILL.md
+Origin:     https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+Upstream:   Copyright (c) 2024 Next Level Builder, MIT
+
+The design tables in this repository are redistributed from the project above.
+The MIT licence requires that its copyright notice travel with them, so it is
+reproduced below verbatim. Everything else in this repository — the package,
+the command-line interface, the test suite and the CI configuration — is
+original work under the top-level LICENSE.
+
+---
+
+MIT License
+
+Copyright (c) 2024 Next Level Builder
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

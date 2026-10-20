@@ -1,8 +1,9 @@
 """A searchable UI/UX design knowledge base, ranked with BM25.
 
-The corpus is 1,453 curated rows spread over twelve domains (styles, colour
-palettes, font pairings, chart selection, UX guidelines, ...) and thirteen
-technology stacks. Everything is plain CSV, so the whole thing is auditable
+The corpus is 1,429 rows spread over ten domains (styles, colour palettes,
+font pairings, chart selection, UX guidelines, ...) and thirteen technology
+stacks. The tables are redistributed from the MIT-licensed ui-ux-pro-max-skill;
+see LICENSE-DATA. Everything is plain CSV, so the whole thing is auditable
 with a text editor and there is nothing to keep in sync with a database.
 
 Typical use::

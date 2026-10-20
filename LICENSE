@@ -1,3 +1,7 @@
+Applies to: the code — src/designdex/*.py, tests/, and the CI configuration.
+The design tables in src/designdex/data/ and SKILL.md come from elsewhere and
+carry their own licence; see LICENSE-DATA.
+
 MIT License
 
 Copyright (c) 2026 Andy Kuo Tsai Shuo

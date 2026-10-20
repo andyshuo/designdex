@@ -2,7 +2,9 @@
 
 **Design decisions you can grep.**
 
-An offline index of UI/UX design decisions — 24 curated tables, 1,429 rows, ranked with BM25. Ask which chart fits time-series data, which font pairs with a data dashboard, or how to memoize an expensive React render, and it returns the row that answers it, as Markdown or JSON.
+An offline index of UI/UX design decisions — 24 tables, 1,429 rows, ranked with BM25. Ask which chart fits time-series data, which font pairs with a data dashboard, or how to memoize an expensive React render, and it returns the row that answers it, as Markdown or JSON.
+
+The tables are redistributed from the MIT-licensed [`ui-ux-pro-max-skill`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill). The ranker, the package, the test suite and the fixes are what this repository adds — [details below](#where-the-data-comes-from).
 
 [![ci](https://github.com/andyshuo/designdex/actions/workflows/ci.yml/badge.svg)](https://github.com/andyshuo/designdex/actions/workflows/ci.yml)
 
@@ -140,7 +142,7 @@ Design system persisted to /path/to/project/design-system/fintech-console/
 
 ## What is in the box
 
-Ten domains, 1,429 curated rows.
+Ten domains, 641 rows — 1,429 in total once the thirteen stack guides and the design-system reasoning table are counted.
 
 | Domain | Rows | Answers questions about |
 | --- | ---: | --- |
@@ -191,7 +193,11 @@ Everything returns plain dicts and lists. No client to configure, no state to ma
 
 ## Where the data comes from
 
-The rows are hand-curated, and every external reference points at first-party documentation: `react.dev`, `tailwindcss.com`, `ui.shadcn.com`, `fonts.google.com`, `developer.apple.com/documentation/swiftui`, `api.flutter.dev`. The code snippets are one-liners showing API usage, not excerpts from other people's programs.
+The tables are not mine.
+
+The 24 CSV files come from [`nextlevelbuilder/ui-ux-pro-max-skill`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill), a design skill released under the MIT licence. They are redistributed here under that licence, and its copyright notice travels with them in [LICENSE-DATA](LICENSE-DATA). Every external reference in the tables points at first-party documentation: `react.dev`, `tailwindcss.com`, `ui.shadcn.com`, `fonts.google.com`, `developer.apple.com/documentation/swiftui`, `api.flutter.dev`. The code snippets are one-liners showing API usage, not excerpts from other people's programs.
+
+What is mine is the layer around them: turning a directory of scripts into an installable package, rewriting the CLI, writing the 100-test suite, setting up CI, and fixing the five bugs listed under Development. The tables were the raw material. The ranking that was silently wrong is what I found.
 
 ## What this is not
 
@@ -215,7 +221,7 @@ $ uv run ruff format --check .
 
 Dev dependencies live in `[dependency-groups]` (PEP 735), which `uv sync` installs without being asked. There is no other setup step: no virtualenv to activate, no `pip install -e`, and no build backend to configure by hand. `uv run designdex ...` runs your edited copy, so the loop between changing a row in `src/designdex/data/` and seeing what it retrieves is one command.
 
-100 tests, 92% statement coverage, CI across Python 3.9–3.13.
+102 tests, 92% statement coverage, CI across Python 3.9–3.14.
 
 Each of the five bugs fixed before the first release is pinned by a test that fails if the fix is reverted:
 
@@ -229,4 +235,4 @@ Each of the five bugs fixed before the first release is pinned by a test that fa
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT covers the code — see [LICENSE](LICENSE). The design tables carry the licence they arrived with, reproduced in [LICENSE-DATA](LICENSE-DATA); both files ship inside the wheel.
