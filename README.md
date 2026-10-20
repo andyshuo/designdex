@@ -6,10 +6,35 @@ An offline index of UI/UX design decisions — 24 curated tables, 1,429 rows, ra
 
 [![ci](https://github.com/andyshuo/designdex/actions/workflows/ci.yml/badge.svg)](https://github.com/andyshuo/designdex/actions/workflows/ci.yml)
 
-```console
-$ pip install .
-$ designdex "glassmorphism"
+## Install
 
+No runtime dependencies, so there is nothing to compile and nothing to download. Pick how much you want it to stick:
+
+Run it once and leave no trace behind:
+
+```console
+$ uvx --from git+https://github.com/andyshuo/designdex designdex "glassmorphism"
+```
+
+Install the command onto your `PATH`:
+
+```console
+$ uv tool install git+https://github.com/andyshuo/designdex
+$ designdex "glassmorphism"
+```
+
+Or work against a checkout, which is what you want if you intend to edit the tables:
+
+```console
+$ git clone https://github.com/andyshuo/designdex
+$ cd designdex
+$ uv sync
+$ uv run designdex "glassmorphism"
+```
+
+Each of these prints:
+
+```console
 ## designdex / result
 **Domain:** style | **Query:** glassmorphism
 **Source:** styles.csv | **Found:** 1 results
@@ -24,7 +49,7 @@ $ designdex "glassmorphism"
 - **CSS/Technical Keywords:** backdrop-filter: blur(15px), background: rgba(255, 255, 255, 0.15)
 ```
 
-Python 3.9 or newer. No dependencies, no network, no API key, no service to keep alive.
+Python 3.9 or newer. `uv sync` installs from the committed `uv.lock`, so a checkout gets exactly the toolchain CI runs. At query time there is no network, no API key, and no service to keep alive. (It is still an ordinary wheel, so `pip install .` works if you would rather.)
 
 ## The problem
 
@@ -181,11 +206,14 @@ The boundary is more useful than a feature list, so here it is plainly.
 ## Development
 
 ```console
-$ pip install -e ".[dev]"
-$ pytest --cov=designdex --cov-report=term-missing
-$ ruff check .
-$ ruff format --check .
+$ git clone https://github.com/andyshuo/designdex && cd designdex
+$ uv sync
+$ uv run pytest --cov=designdex --cov-report=term-missing
+$ uv run ruff check .
+$ uv run ruff format --check .
 ```
+
+Dev dependencies live in `[dependency-groups]` (PEP 735), which `uv sync` installs without being asked. There is no other setup step: no virtualenv to activate, no `pip install -e`, and no build backend to configure by hand. `uv run designdex ...` runs your edited copy, so the loop between changing a row in `src/designdex/data/` and seeing what it retrieves is one command.
 
 100 tests, 92% statement coverage, CI across Python 3.9–3.13.
 
