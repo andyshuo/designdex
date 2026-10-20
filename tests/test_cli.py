@@ -1,9 +1,11 @@
 """Tests for the command line interface."""
 
 import json
+from pathlib import Path
 
 import pytest
 
+from designdex import __version__
 from designdex.cli import build_parser, format_output, main
 from designdex.core import search
 
@@ -101,3 +103,19 @@ def test_main_writes_a_page_override(tmp_path, capsys):
     )
 
     assert (tmp_path / "design-system" / "ledger" / "pages" / "settings.md").is_file()
+
+
+def test_version_flag_prints_the_package_version(capsys):
+    with pytest.raises(SystemExit) as exited:
+        main(["--version"])
+
+    assert exited.value.code == 0
+    assert capsys.readouterr().out.strip() == f"designdex {__version__}"
+
+
+def test_the_declared_version_matches_pyproject():
+    pyproject = (Path(__file__).resolve().parent.parent / "pyproject.toml").read_text(
+        encoding="utf-8"
+    )
+
+    assert f'version = "{__version__}"' in pyproject

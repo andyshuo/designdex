@@ -7,6 +7,7 @@ import io
 import json
 import sys
 
+from . import __version__
 from .core import AVAILABLE_STACKS, CSV_CONFIG, MAX_RESULTS, search, search_stack
 from .design_system import (
     DesignSystemGenerator,
@@ -28,7 +29,12 @@ def build_parser() -> argparse.ArgumentParser:
     """
     parser = argparse.ArgumentParser(
         prog="designdex",
-        description="Search a curated UI/UX design knowledge base.",
+        description="Search an offline UI/UX design knowledge base.",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
     )
     parser.add_argument("query", help="Search query")
     parser.add_argument(
